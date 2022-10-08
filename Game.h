@@ -1,17 +1,24 @@
 #pragma once
-
+#include <iostream>
+using namespace std;
 //setup sdl
 #include <SDL.h>
+#include "Texture.h"
+#include "Animation.h"
+
+struct CharacterAnimations {
+	Animation* Idle;
+	Animation* Attack;
+};
 
 class Game
 {
 	public:
-	// constructor
+	//constructor
 		Game();
 	//deconstructor
 		~Game();
 	
-
 	private:
 		//the window that we will be rendering to
 		SDL_Window* SdlWindow;
@@ -19,6 +26,13 @@ class Game
 		SDL_Renderer* SdlRenderer;
 		// flag for the game loop
 		bool bIsGameOver;
+		
+		//player texture
+		Texture* PlayerTexture;
+		CharacterAnimations* PlayerAnims;
+
+		//how long since last update
+		unsigned int LastUpdateTime;
 
 	public:
 		//crate the renderer
@@ -44,11 +58,7 @@ class Game
 		//dealocate objects from memory
 		void Shutdown();
 
-
-		//shutdown the sdl framework delete the renderer fro memory
+		//shutdown the sdl framework delete the renderer from memory
 		void Destroy();
-
-
-
 };
 

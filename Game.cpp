@@ -1,6 +1,6 @@
 #include "Game.h"
-#include <iostream>
-using namespace std;
+#include "Texture.h"
+
 
 //constructor
 Game::Game()
@@ -12,23 +12,18 @@ Game::Game()
 	//initiallise subsystem in SDL2 framework
 	if (SDL_InitSubSystem(SDL_INIT_EVERYTHING) != 0)
 	{
-
 		bIsGameOver = true;
 		//if failed to initialise subsystem, tell us on the console
 		cout << "initialised SDL - failed" << endl;
 		//exit app
-		
-
 	}
 	else
 	{
-
 		bIsGameOver = false;
 		//if subsystem successully initialises
 		cout << "initialised success" << endl;
 	}
 }
-
 
 // deconsructor
 Game::~Game()
@@ -36,15 +31,31 @@ Game::~Game()
 
 }
 
-
 bool Game::Start()
 {
 	//create the sdl renderer and define it
 	SdlRenderer = SDL_CreateRenderer(SdlWindow, 0, -1);
 
+	//get the start time of the clock in millisec
+	LastUpdateTime = SDL_GetTicks();
+
 	//make sure the renderer worked
 	if (SdlRenderer != nullptr) {
 		cout << "create renderer - success" << endl;
+
+		//initialised texture
+		PlayerTexture = new Texture();
+		//load the texture
+		if (PlayerTexture->LoadImageFromFile("Assets/Adventurer-50x37-109.png", SdlRenderer)) {
+
+			cout << "player texture - success" << endl;
+
+			PlayerAnims->Idle = new Animation(PlayerTexture, 109,1.0f,0,9);
+		}
+		else {
+			cout << "player texture - failed" << endl;
+		}
+
 		return true;
 	}
 
@@ -62,6 +73,18 @@ void Game::ProcessInput()
 void Game::Update()
 {
 	// @ todo: add and changes to the game each frame
+
+	unsigned int tick = SDL_GetTicks() - LastUpdateTime;
+
+	//Change the tick to seconds
+	float DeltaTime = tick / 1000.0f;
+
+	//refresh the last update time
+	LastUpdateTime = SDL_GetTicks();
+
+	//todo add anything that needs deltatime here
+
+	PlayerAnims->Attack->Update(DeltaTime);
 
 	//get how many seconds it has been
 	int Seconds = SDL_GetTicks() / 1000;
@@ -83,6 +106,7 @@ void Game::Draw()
 	SDL_RenderClear(SdlRenderer);
 
 	// @ todo: Draw stuff here
+	PlayerAnims->Attack->Draw(SdlRenderer, 0, 0);
 
 	SDL_RenderPresent(SdlRenderer);
 
