@@ -1,22 +1,25 @@
-#pragma once
 #include "SDL.h"
 #include "Texture.h"
+#include "Vector2.h"
+
 class Animation
 {
-
 public:
+	//Constructor
 	Animation();
 
-	Animation(Texture* InSpriteSheet, int InNumberOfFrames = 1, float InFrameDuration = 0.1f, int InStartFrame = 0, int InEndFrame = 0);
+	//Override Constructor
+	Animation(Texture* InSpriteSheet, int InNumberOfFrames = 1, float InFrameDuration = 0.1f,
+		int InStartFrame = 0, int InEndFrame = 1);
 
-
+	//Deconstructor
 	~Animation();
-
 
 	//update the animation on each frame
 	void Update(float DeltaTime);
 
-	void Draw(SDL_Renderer* Renderer, int PosX = 0, int PosY = 0, int Scale = 1);
+	//Draw the texture to screen at the positions and scale
+	void Draw(SDL_Renderer* Renderer, Vector2 Pos, int Scale = 1, bool Flip = false);
 
 	int GetFrameWidth() { return FrameWidth; }
 
@@ -31,17 +34,15 @@ private:
 	unsigned int FrameWidth;
 	unsigned int FrameHeight;
 
-	//textureimage for the spritesheet
+	//Texture image for the spritesheet
 	Texture* SpriteSheet;
 
 	//timer since the last sprite update
 	float FrameTimer;
 
-	//how long each frame should hold for
+	//How long each frame should hold for
 	float FrameDuration;
 
-	//what frame are we currently showing
+	//What frame are we currently on
 	unsigned int CurrentFrame;
-
 };
-
