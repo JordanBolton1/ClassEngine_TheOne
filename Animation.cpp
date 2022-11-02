@@ -55,15 +55,15 @@ void Animation::Update(float DeltaTime)
 	}
 }
 
-void Animation::Draw(SDL_Renderer* Renderer, int PosX, int PosY, int Scale)
+void Animation::Draw(SDL_Renderer* renderer, Vector2 Pos, SDL_Rect* SourceRect, int scale, bool Flip)
 {
-
-	//get current rendering frame clipping region
+	//get the current rendering frame clipping region
 	SDL_Rect clip;
 	clip.x = CurrentFrame * FrameWidth;
 	clip.y = 0;
 	clip.w = FrameWidth;
 	clip.h = FrameHeight;
+
 	//draw to the screen
-	SpriteSheet->Draw(Renderer, PosX, PosY, &clip);
+	SpriteSheet->Draw(Renderer, Pos, &clip);
 }

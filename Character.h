@@ -1,3 +1,4 @@
+#pragma once
 #include "GameObject.h"
 #include "SDL.h"
 #include "Vector2.h"
@@ -21,8 +22,6 @@ protected:
 	Vector2 GetMovementAxis();
 
 private:
-	unsigned int NumberOfFrames;
-
 	//Velocity is the true representation of speed, this will have an x and y value
 	Vector2 Velocity;
 	//This is going to detect input and move our character based on its direction

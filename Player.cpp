@@ -41,5 +41,15 @@ void Player::ProcessInput(Input* UserInput)
 		MovementX = 1.0f;
 	}
 
+	if (UserInput->bIsKeyDown(SDL_SCANCODE_SPACE)) {
+		//Store the colliders overlapping our collider
+		vector<Collider*> OtherColliders = GetCollision()->GetOverlappingColliders();
+		//run through all the colliders we're overlapping
+		for (unsigned int i = 0; i < OtherColliders.size(); ++i) {
+			SDL_Log("Collider Detected");
+			GetCollision()->GetOverlappingColliders()[i]->GetOwner()->DestroyGameObject();
+		}
+	}
+
 	SetMovementAxis(Vector2(MovementX, MovementY));
 }

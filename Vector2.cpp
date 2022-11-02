@@ -3,6 +3,8 @@
 
 Vector2::Vector2()
 {
+	x = 0;
+	y = 0;
 }
 
 Vector2::Vector2(float x, float y)
@@ -148,5 +150,5 @@ Vector2 Vector2::Normalised()
 
 Vector2 Vector2::Zero()
 {
-	return Vector2();
+	return Vector2(0,0);
 }

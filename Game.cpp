@@ -12,6 +12,11 @@ Game::Game()
 	// set the SDL Window and Renderer to null in case it has memory
 	SdlWindow = nullptr;
 	SdlRenderer = nullptr;
+	EnemyTexture = nullptr;
+	LastUptadeTime = 0.0f;
+	PlayerTexture = nullptr;
+	UserInput = nullptr;
+
 
 	// Initialise the subsytem in the SDL2 Framework
 	if (SDL_InitSubSystem(SDL_INIT_EVERYTHING) != 0) {
@@ -125,6 +130,10 @@ void Game::Draw()
 	}
 
 	SDL_RenderPresent(SdlRenderer);
+}
+
+void Game::HandleGarbage()
+{
 }
 
 void Game::Run(const char* title, int width, int height, bool fullscreen)

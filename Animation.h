@@ -19,7 +19,7 @@ public:
 	void Update(float DeltaTime);
 
 	//Draw the texture to screen at the positions and scale
-	void Draw(SDL_Renderer* Renderer, Vector2 Pos, int Scale = 1, bool Flip = false);
+	void Draw(SDL_Renderer* renderer, Vector2 Pos, SDL_Rect* SourceRect, int scale, bool Flip);
 
 	int GetFrameWidth() { return FrameWidth; }
 

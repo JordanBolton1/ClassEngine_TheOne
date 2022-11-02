@@ -1,3 +1,5 @@
+#pragma once
+
 // setup SDL
 #include <SDL.h>
 //Get the texture files
@@ -60,6 +62,9 @@ public:
 
 	// draw the game images to the screen
 	void Draw();
+
+	//runa function that will handle deleting object after or before all functionality is complete
+	void HandleGarbage();
 
 	// this will create the window and begin the game loop
 	// @ param 1 - title for the window

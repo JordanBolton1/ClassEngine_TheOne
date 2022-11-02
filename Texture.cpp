@@ -58,22 +58,25 @@ bool Texture::LoadImageFromFile(const char* path, SDL_Renderer* renderer)
 	return SdlTexture != nullptr;
 }
 
-void Texture::Draw(SDL_Renderer* renderer, int x, int y, SDL_Rect* SourceRect, int Scale)
+void Texture::Draw(SDL_Renderer* renderer, Vector2 Pos, SDL_Rect* SourceRect, int scale, bool Flip)
 {
-	// set the rendering space and render dimensions of the texture
-	SDL_Rect DestinationRect = { x, y, width, height };
+	//set the rendering space and render dimensions of the texture
+	SDL_Rect DestinationRect = { Pos.x, Pos.y, width, height };
 
-	// clip/crop the image if we have a source rect
+	//clip the image if we have a source rect
 	if (SourceRect != nullptr) {
-		DestinationRect.w = SourceRect->w;
-		DestinationRect.h = SourceRect->h;
+		DestinationRect.w = SourceRect->w * scale;
+		DestinationRect.h = SourceRect->h * scale;
 	}
 
-	DestinationRect.w *= Scale;
-	DestinationRect.h *= Scale;
+	SDL_RendererFlip FlipFlag = SDL_FLIP_NONE;
 
-	// render to the screen
-	SDL_RenderCopy(renderer, SdlTexture, SourceRect, &DestinationRect);
+	if (Flip) {
+		FlipFlag = SDL_FLIP_HORIZONTAL;
+	}
+
+	//render to the screen
+	SDL_RenderCopyEx(renderer, SdlTexture, SourceRect, &DestinationRect, 0, 0, FlipFlag);
 }
 
 void Texture::ResetTexture()
